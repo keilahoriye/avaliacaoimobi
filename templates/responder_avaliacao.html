@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block titulo %}Responder Avaliação{% endblock %}
+{% block cabecalho %}Responder Avaliação{% endblock %}
+
+{% block botoes_topo %}
+{% endblock %}
+
+{% block conteudo %}
+<form method="POST">
+    <input type="hidden" name="id_cliente" value="{{ id_cliente }}">
+
+    <label>Corretor:</label>
+    <select name="id_corretor" required>
+        <option value="" disabled selected>Selecione</option>
+        {% for c in corretores %}
+            <option value="{{ c[0] }}">{{ c[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <div id="questoes_container"></div>
+
+    <button type="submit">Enviar</button>
+</form>
+
+<script>
+    const idAvaliacao = "{{ id_avaliacao }}";
+    const container = document.getElementById("questoes_container");
+
+    fetch(`/avaliacoes/${idAvaliacao}/questoes/json`)
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(q => {
+                let div = document.createElement("div");
+                div.className = "questao";
+                let label = document.createElement("label");
+                label.textContent = q.texto;
+                div.appendChild(label);
+
+                const tipo = q.nome_tipo.toLowerCase();
+
+                // === MULTIPLA ESCOLHA (se tiver opções) ===
+                if (q.opcoes && q.opcoes.length > 0) {
+                    let select = document.createElement("select");
+                    select.name = `resposta_texto_${q.id_questao}`;
+                    select.required = true;
+
+                    let optionDefault = document.createElement("option");
+                    optionDefault.value = "";
+                    optionDefault.textContent = "Escolha...";
+                    select.appendChild(optionDefault);
+
+                    q.opcoes.forEach(op => {
+                        let option = document.createElement("option");
+                        option.value = op.trim();
+                        option.textContent = op.trim();
+                        select.appendChild(option);
+                    });
+
+                    div.appendChild(select);
+
+                // === ESCALA NUMÉRICA ===
+                } else if (
+                    tipo.includes("escala") ||
+                    tipo.includes("0 a") ||
+                    tipo.match(/\d\s*a\s*\d/)
+                ) {
+                    let input = document.createElement("input");
+                    input.type = "number";
+                    input.name = `resposta_numero_${q.id_questao}`;
+                    input.required = true;
+
+                    // tenta extrair min e max automaticamente
+                    const match = tipo.match(/(\d+)\s*a\s*(\d+)/);
+                    if (match) {
+                        input.min = match[1];
+                        input.max = match[2];
+                    }
+
+                    div.appendChild(input);
+
+                // === TEXTO LIVRE ===
+                } else if (tipo.includes("texto")) {
+                    let textarea = document.createElement("textarea");
+                    textarea.name = `resposta_texto_${q.id_questao}`;
+                    textarea.required = true;
+                    div.appendChild(textarea);
+
+                // === BACKUP: SEM TIPO → TEXTO ===
+                } else {
+                    let textarea = document.createElement("textarea");
+                    textarea.name = `resposta_texto_${q.id_questao}`;
+                    div.appendChild(textarea);
+                }
+
+                container.appendChild(div);
+            });
+
+        })
+        .catch(err => {
+            console.error("Erro ao carregar questões:", err);
+            container.innerHTML = "<p style='color:red;'>Não foi possível carregar as questões.</p>";
+        });
+</script>
+{% endblock %}

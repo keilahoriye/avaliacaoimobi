@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titulo %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+
+    <style>
+        /* ====== ESTILOS GERAIS ====== */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fafafa;
+        }
+
+        /* ====== MENU SUPERIOR (CLARO) ====== */
+        nav.menu-topo {
+            width: 100%;
+            background: #f3f4f6;
+            border-bottom: 1px solid #ddd;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        nav.menu-topo a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+        nav.menu-topo a:hover {
+            text-decoration: underline;
+        }
+
+        .logout {
+            font-weight: bold;
+        }
+
+        /* ====== USUÁRIO LOGADO ====== */
+        .usuario-logado {
+            background: #f3f4f6;
+            text-align: right;
+            padding: 18px 24px;
+            font-size: 15px;
+            color: #222;
+            font-style: italic;
+        }
+
+        /* ====== HEADER DAS PÁGINAS ====== */
+        header.topo {
+            padding: 35px 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        header.topo h1 {
+            margin: 0;
+            font-size: 30px;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .acoes-topo {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .botao-topo {
+            padding: 8px 14px;
+            background: #2563eb;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .botao-topo:hover {
+            background: #1d4ed8;
+        }
+
+        /* ====== CONTEÚDO ====== */
+        main {
+            padding: 0 24px 40px 24px;
+        }
+
+        /* ====== RODAPÉ ====== */
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #888;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== MENU SUPERIOR CLARO ===== -->
+    <nav class="menu-topo">
+        {% if session.get("id_usuario") %}
+
+            <!-- ADMIN -->
+            {% if session["perfil"] == "admin" %}
+                <a href="{{ url_for('listar_usuarios') }}">Usuários</a>
+                <a href="{{ url_for('listar_avaliacoes') }}">Avaliações</a>
+                <a href="{{ url_for('listar_tipos_avaliacao') }}">Tipos de Avaliação</a>
+                <a href="{{ url_for('listar_tipos_questao') }}">Tipos de Questão</a>
+                <a href="{{ url_for('listar_questoes') }}">Questões</a>
+                <a href="{{ url_for('formularios') }}">Formulários</a>
+            
+            {% elif session["perfil"] == "gestor" %}
+                <a href="{{ url_for('listar_avaliacoes') }}">Avaliações</a>
+                <a href="{{ url_for('listar_tipos_avaliacao') }}">Tipos de Avaliação</a>
+                <a href="{{ url_for('listar_tipos_questao') }}">Tipos de Questão</a>
+                <a href="{{ url_for('listar_questoes') }}">Questões</a>
+                <a href="{{ url_for('formularios') }}">Formulários</a>
+            
+            {% elif session["perfil"] == "corretor" %}
+
+
+            {% elif session["perfil"] == "cliente" %}
+        
+                {% endif %}
+
+            <!-- logout -->
+            <a href="{{ url_for('logout') }}" class="logout">Sair</a>
+
+        {% else %}
+            <!-- Não logado -->
+            <a href="{{ url_for('login') }}">Entrar</a>
+        {% endif %}
+    </nav>
+
+
+    <!-- ===== USUÁRIO LOGADO ===== -->
+    {% if session.get("id_usuario") %}
+    <div class="usuario-logado">
+        {{ session["nome"] }}
+    </div>
+    {% endif %}
+
+    <!-- ===== HEADER DA PÁGINA ===== -->
+    <header class="topo">
+        <h1>{% block cabecalho %}{% endblock %}</h1>
+
+        <div class="acoes-topo">
+            {% block botoes_topo %}{% endblock %}
+        </div>
+    </header>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+</html>

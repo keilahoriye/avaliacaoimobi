@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %}Questões{% endblock %}
+{% block cabecalho %}Questões{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('criar_questao') }}" class="botao-acao">Nova Questão</a>
+{% endblock %}
+
+{% block conteudo %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Texto</th>
+            <th>Avaliação</th>
+            <th>Tipo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for q in questoes %}
+        <tr>
+            <td>{{ q[0] }}</td>
+            <td>{{ q[1] }}</td>
+            <td>{{ q[2] }}</td>
+            <td>{{ q[3] }}</td>
+            <td>
+                <a href="{{ url_for('editar_questao', id_questao=q[0]) }}">Editar</a> 
+                <a href="{{ url_for('deletar_questao', id_questao=q[0]) }}" onclick="return confirm('Deseja excluir esta questão?')">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

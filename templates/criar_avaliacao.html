@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %}Criar Avaliação{% endblock %}
+{% block cabecalho %}Criar Nova Avaliação{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('listar_avaliacoes') }}" class="botao-acao">Voltar</a>
+{% endblock %}
+
+{% block conteudo %}
+<form method="POST">
+    <label>Nome da Avaliação:</label>
+    <input type="text" name="nome" required>
+
+    <label>Tipo de Avaliação:</label>
+        <select name="id_tipo_avaliacao" required>
+            <option value="">Selecione...</option>
+            {% for t in tipos %}
+                <option value="{{ t[0] }}">{{ t[1] }}</option>
+            {% endfor %}
+        </select>
+
+    <label>Descrição:</label>
+    <textarea name="descricao"></textarea>
+
+    <label>Gestor Responsável:</label>
+    <select name="id_gestor" required>
+        <option value="" disabled selected>Selecione</option>
+        {% for g in gestores %}
+            <option value="{{ g[0] }}">{{ g[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Salvar</button>
+</form>
+{% endblock %}

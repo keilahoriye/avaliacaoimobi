@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Avaliação</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <h1>Editar Avaliação</h1>
+
+    <form method="POST">
+        <label>Nome da Avaliação:</label><br>
+        <input type="text" name="nome" value="{{ avaliacao[1] }}" required><br><br>
+
+        <label>Tipo de Avaliação:</label>
+        <select name="id_tipo_avaliacao" required>
+            <option value="">Selecione</option>
+            {% for t in tipos %}
+                <option value="{{ t[0] }}" {% if t[0] == avaliacao[3] %}selected{% endif %}>{{ t[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Descrição:</label><br>
+        <textarea name="descricao" rows="3">{{ avaliacao[3] }}</textarea><br><br>
+
+        <label>Gestor Responsável:</label><br>
+        <select name="id_gestor" required>
+            {% for g in gestores %}
+                <option value="{{ g[0] }}" {% if g[0] == avaliacao[4] %}selected{% endif %}>{{ g[1] }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Salvar Alterações</button>
+        <a href="{{ url_for('listar_avaliacoes') }}">Cancelar</a>
+    </form>
+    <a href="{{ url_for('index') }}" class="voltar">⬅ Voltar ao menu principal</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Principal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Avaliação da Jornada do Cliente da Imobiliária</h1>
+        <p>Escolha uma das opções abaixo:</p>
+
+        <div class="menu-botoes">
+            <a href="{{ url_for('listar_usuarios') }}" class="botao">Usuários</a>
+            <a href="{{ url_for('listar_avaliacoes') }}" class="botao">Avaliações</a>
+            <a href="{{ url_for('listar_tipos_avaliacao') }}" class="botao">Tipos de Avaliação</a>
+            <a href="{{ url_for('listar_questoes') }}" class="botao">Questões</a>
+            <a href="{{ url_for('listar_tipos_questao') }}" class="botao">Tipos de Questão</a>
+            <a href="{{ url_for('formularios') }}" class="botao">Formulários Respondidos</a>
+        </div>
+    </div>
+</body>
+</html>

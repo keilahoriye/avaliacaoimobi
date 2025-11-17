@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block titulo %}Formulários Respondidos{% endblock %}
+{% block cabecalho %}Formulários Respondidos{% endblock %}
+
+{% block botoes_topo %}
+{% endblock %}
+
+{% block conteudo %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Avaliação</th>
+            <th>Cliente</th>
+            <th>Corretor</th>
+            <th>Data</th>
+            <th>Ver Respostas</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in formularios %}
+        <tr>
+            <td>{{ f[0] }}</td>
+            <td>{{ f[1] }}</td>
+            <td>{{ f[2] }}</td>
+            <td>{{ f[3] }}</td>
+            <td>{{ f[4] }}</td>
+            <td><a href="{{ url_for('listar_respostas', id_form=f[0]) }}">Ver Respostas</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

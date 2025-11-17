@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block titulo %}Criar Tipo de Avaliação{% endblock %}
+{% block cabecalho %}Criar Tipo de Avaliação{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('listar_tipos_avaliacao') }}" class="botao-menu">Voltar</a>
+{% endblock %}
+
+{% block conteudo %}
+<form method="POST">
+    <label>Nome do Tipo:</label>
+    <input type="text" name="nome_tipo" required>
+
+    <label>Descrição:</label>
+    <textarea name="descricao"></textarea>
+
+    <button type="submit">Salvar</button>
+</form>
+{% endblock %}

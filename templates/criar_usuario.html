@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block titulo %}Criar Usuário{% endblock %}
+{% block cabecalho %}Criar Novo Usuário{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('listar_usuarios') }}" class="botao-acao">Voltar</a>
+{% endblock %}
+
+{% block conteudo %}
+<form method="POST">
+    <label>Nome:</label>
+    <input type="text" name="nome" required>
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Telefone:</label>
+    <input type="text" name="telefone" required>
+
+    <label>Senha:</label>
+    <input type="password" name="senha" required>
+
+    <label>Perfil:</label>
+    <select name="perfil" required>
+        <option value="" disabled selected>Selecione</option>
+        <option value="cliente">Cliente</option>
+        <option value="corretor">Corretor</option>
+        <option value="gestor">Gestor</option>
+        <option value="admin">Admin</option>
+    </select>
+
+    <button type="submit">Salvar</button>
+</form>
+{% endblock %}

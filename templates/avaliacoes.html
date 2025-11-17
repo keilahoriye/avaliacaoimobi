@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block titulo %}Avaliações{% endblock %}
+{% block cabecalho %}Avaliações{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('criar_avaliacao') }}" class="botao-acao">Criar Nova Avaliação</a>
+{% endblock %}
+
+{% block conteudo %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Gestor</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if avaliacoes %}
+            {% for a in avaliacoes %}
+            <tr>
+                <td>{{ a[0] }}</td>
+                <td>{{ a[1] }}</td>
+                <td>{{ a[2] or "—" }}</td>
+                <td>{{ a[3] or "—" }}</td>
+                <td>{{ a[4] or "—" }}</td>
+                <td>
+                    <a href="{{ url_for('responder_avaliacao', id_avaliacao=a[0]) }}">Responder</a> |
+                    <a href="{{ url_for('editar_avaliacao', id_avaliacao=a[0]) }}">Editar</a> |
+                    <a href="{{ url_for('deletar_avaliacao', id_avaliacao=a[0]) }}"
+                       onclick="return confirm('Tem certeza que deseja excluir esta avaliação?')">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6" style="text-align:center; color:#777;">Nenhuma avaliação cadastrada.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}
