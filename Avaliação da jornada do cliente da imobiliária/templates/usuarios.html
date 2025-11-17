@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block titulo %}Usuários{% endblock %}
+{% block cabecalho %}Usuários{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('criar_usuario') }}" class="botao-acao">Cadastrar Novo Usuário</a>
+{% endblock %}
+
+{% block conteudo %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Perfil</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in usuarios %}
+        <tr>
+            <td>{{ u[0] }}</td>
+            <td>{{ u[1] }}</td>
+            <td>{{ u[2] }}</td>
+            <td>{{ u[3] }}</td>
+            <td>{{ u[4] }}</td>
+            <td>
+                <a href="{{ url_for('editar_usuario', id_usuario=u[0]) }}">Editar</a> |
+                <a href="{{ url_for('deletar_usuario', id_usuario=u[0]) }}" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

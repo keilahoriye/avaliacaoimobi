@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block titulo %}Respostas{% endblock %}
+{% block cabecalho %}Respostas do Formulário{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('formularios') }}" class="botao-acao">Voltar</a>
+{% endblock %}
+
+{% block conteudo %}
+<table>
+    <thead>
+        <tr>
+            <th>ID Resposta</th>
+            <th>ID Questão</th>
+            <th>Texto da Questão</th>
+            <th>Resposta</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in respostas %}
+        <tr>
+            <td>{{ r[0] }}</td>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+            <td>{{ r[3] or r[4] }}</td>
+            <td>
+                <a href="{{ url_for('deletar_resposta', id_resposta=r[0]) }}" onclick="return confirm('Deseja excluir esta resposta?')">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

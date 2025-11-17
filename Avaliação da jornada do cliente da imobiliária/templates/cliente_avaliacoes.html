@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}Avaliações Disponíveis{% endblock %}
+{% block cabecalho %}Avaliações Disponíveis{% endblock %}
+
+{% block conteudo %}
+<table class="tabela">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if avaliacoes %}
+            {% for a in avaliacoes %}
+            <tr>
+                <td>{{ a[1] }}</td>
+                <td>{{ a[2] or '—' }}</td>
+                <td>
+                    <a class="botao-topo" href="{{ url_for('responder_avaliacao', id_avaliacao=a[0]) }}">Responder</a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3" style="text-align:center; color:#777;">Nenhuma avaliação disponível.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

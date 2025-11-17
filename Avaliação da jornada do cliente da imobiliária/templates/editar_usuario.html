@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <h1>Editar Usuário</h1>
+
+    <form method="POST">
+        <label>Nome:</label><br>
+        <input type="text" name="nome" value="{{ usuario[1] }}" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" value="{{ usuario[2] }}" required><br><br>
+
+        <label>Telefone:</label><br>
+        <input type="text" name="telefone" value="{{ usuario[3] }}"><br><br>
+
+        <label>Senha:</label><br>
+        <input type="password" name="senha" value="{{ usuario[4] }}" required><br><br>
+
+        <label>Perfil:</label><br>
+        <select name="perfil" required>
+            <option value="cliente" {% if usuario[5] == 'cliente' %}selected{% endif %}>Cliente</option>
+            <option value="corretor" {% if usuario[5] == 'corretor' %}selected{% endif %}>Corretor</option>
+            <option value="gestor" {% if usuario[5] == 'gestor' %}selected{% endif %}>Gestor</option>
+            <option value="admin" {% if usuario[5] == 'admin' %}selected{% endif %}>Admin</option>
+        </select><br><br>
+
+        <button type="submit">Salvar Alterações</button>
+        <a href="{{ url_for('listar_usuarios') }}">Cancelar</a>
+    </form>
+    <a href="{{ url_for('index') }}" class="voltar">⬅ Voltar ao menu principal</a>
+</body>
+</html>

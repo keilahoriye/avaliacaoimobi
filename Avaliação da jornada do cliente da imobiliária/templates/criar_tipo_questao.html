@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block titulo %}Criar Tipo de Questão{% endblock %}
+{% block cabecalho %}Criar Tipo de Questão{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('listar_tipos_questao') }}" class="botao-acao">Voltar</a>
+{% endblock %}
+
+{% block conteudo %}
+<form method="POST">
+    <label>Nome do Tipo:</label>
+    <input type="text" name="nome_tipo" required>
+
+    <label>Descrição:</label>
+    <textarea name="descricao"></textarea>
+
+    <label>Tipo de Resposta:</label>
+    <select name="tipo_resposta" id="tipo_resposta" required onchange="toggleOpcoes()">
+        <option value="" disabled selected>Selecione</option>
+        <option value="texto">Texto Livre</option>
+        <option value="numerico">Numérica / Escala</option>
+        <option value="multipla">Múltipla Escolha</option>
+    </select>
+
+    <div id="campo_opcoes" style="display:none;">
+        <label>Opções (se múltipla, separadas por vírgula):</label>
+        <input type="text" name="opcoes" placeholder="Exemplo: Sim, Parcialmente, Não">
+    </div>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<script>
+function toggleOpcoes() {
+    const select = document.getElementById("tipo_resposta");
+    const campo = document.getElementById("campo_opcoes");
+    campo.style.display = select.value === "multipla" ? "block" : "none";
+}
+</script>
+{% endblock %}

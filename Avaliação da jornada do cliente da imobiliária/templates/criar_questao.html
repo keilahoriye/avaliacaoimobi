@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}Criar Questão{% endblock %}
+{% block cabecalho %}Criar Nova Questão{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('listar_questoes') }}" class="botao-acao">Voltar</a>
+{% endblock %}
+
+{% block conteudo %}
+<form method="POST">
+    <label>Avaliação:</label>
+    <select name="id_avaliacao" required>
+        <option value="" disabled selected>Selecione</option>
+        {% for a in avaliacoes %}
+            <option value="{{ a[0] }}">{{ a[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Tipo de Questão:</label>
+    <select name="id_tipo" required>
+        <option value="" disabled selected>Selecione</option>
+        {% for t in tipos %}
+            <option value="{{ t[0] }}">{{ t[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Texto da Questão:</label>
+    <textarea name="texto" required></textarea>
+
+    <button type="submit">Salvar</button>
+</form>
+{% endblock %}

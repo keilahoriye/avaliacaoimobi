@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block titulo %}Tipos de Avaliação{% endblock %}
+{% block cabecalho %}Tipos de Avaliação{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('criar_tipo_avaliacao') }}" class="botao-acao">Criar Tipo</a>
+{% endblock %}
+
+{% block conteudo %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome Tipo</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if tipos %}
+            {% for t in tipos %}
+            <tr>
+                <td>{{ t[0] }}</td>
+                <td>{{ t[1] }}</td>
+                <td>{{ t[2] or "—" }}</td>
+                <td>
+                    <a href="{{ url_for('editar_tipo_avaliacao', id_tipo_avaliacao=t[0]) }}">Editar</a> |
+                    <a href="{{ url_for('deletar_tipo_avaliacao', id_tipo_avaliacao=t[0]) }}" 
+                       onclick="return confirm('Deseja realmente excluir este tipo de avaliação?')">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="4" style="text-align:center;">Nenhum tipo de avaliação cadastrado.</td></tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

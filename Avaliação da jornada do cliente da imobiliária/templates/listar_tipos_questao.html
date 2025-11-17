@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %}Tipos de Questão{% endblock %}
+{% block cabecalho %}Tipos de Questão{% endblock %}
+
+{% block botoes_topo %}
+<a href="{{ url_for('criar_tipo_questao') }}" class="botao-acao">Novo Tipo</a>
+{% endblock %}
+
+{% block conteudo %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome Tipo</th>
+            <th>Descrição</th>
+            <th>Opções (se múltipla)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in tipos %}
+        <tr>
+            <td>{{ t[0] }}</td>
+            <td>{{ t[1] }}</td>
+            <td>{{ t[2] }}</td>
+            <td>{{ t[3] or "-" }}</td>
+            <td>
+                <a href="{{ url_for('editar_tipo_questao', id_tipo=t[0]) }}">Editar</a> 
+                <a href="{{ url_for('deletar_tipo_questao', id_tipo=t[0]) }}" onclick="return confirm('Tem certeza que deseja excluir este tipo?')">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Tipo de Questão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <h1>Editar Tipo de Questão</h1>
+
+    <form method="POST">
+        <label>Nome do Tipo:</label>
+        <input type="text" name="nome_tipo" value="{{ tipo[1] }}" required><br>
+
+        <label>Descrição:</label>
+        <textarea name="descricao">{{ tipo[2] }}</textarea><br>
+
+        <label>Opções (se múltipla escolha):</label>
+        <input type="text" name="opcoes" value="{{ tipo[3] or '' }}"><br>
+
+        <button type="submit">Salvar Alterações</button>
+        <a href="{{ url_for('listar_tipos_questao') }}">Cancelar</a>
+    </form>
+    <a href="{{ url_for('index') }}" class="voltar">⬅ Voltar ao menu principal</a>
+</body>
+</html>

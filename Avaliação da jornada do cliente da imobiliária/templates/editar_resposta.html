@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titulo %}Editar Resposta{% endblock %}
+{% block cabecalho %}Editar Resposta{% endblock %}
+
+{% block conteudo %}
+<form method="POST">
+    <p><strong>Pergunta:</strong> {{ resposta[1] }}</p>
+
+    {% if resposta[2] %}
+        <label>Nova resposta (texto):</label>
+        <textarea name="resposta_texto" rows="3" required>{{ resposta[2] }}</textarea>
+    {% else %}
+        <label>Nova resposta (número):</label>
+        <input type="number" name="resposta_numero" value="{{ resposta[3] }}" required>
+    {% endif %}
+
+    <button type="submit">Salvar Alterações</button>
+</form>
+
+<a href="{{ url_for('formularios') }}" class="voltar">Voltar</a>
+{% endblock %}
